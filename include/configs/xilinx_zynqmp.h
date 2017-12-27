@@ -58,7 +58,6 @@
 #ifndef CONFIG_SPL_BUILD
 # define CONFIG_ISO_PARTITION
 #endif
-#define CONFIG_MP
 
 /* BOOTP options */
 #define CONFIG_BOOTP_BOOTFILESIZE
@@ -224,6 +223,7 @@
 		"load mmc $sdbootdev:$partid $fdt_addr system.dtb && " \
 		"load mmc $sdbootdev:$partid $kernel_addr Image && " \
 		"booti $kernel_addr - $fdt_addr\0" \
+	"emmcboot=run sdboot\0" \
 	"nandboot=nand info && nand read $fdt_addr $fdt_offset $fdt_size && " \
 		  "nand read $kernel_addr $kernel_offset $kernel_size && " \
 		  "booti $kernel_addr - $fdt_addr\0" \

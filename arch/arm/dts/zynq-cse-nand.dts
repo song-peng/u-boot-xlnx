@@ -1,7 +1,7 @@
 /*
- * Xilinx CSE QSPI board DTS
+ * Xilinx CSE NAND board DTS
  *
- * Copyright (C) 2015 - 2017 Xilinx, Inc.
+ * Copyright (C) 2015 Xilinx, Inc.
  *
  * SPDX-License-Identifier:	GPL-2.0+
  */
@@ -10,17 +10,16 @@
 / {
 	#address-cells = <1>;
 	#size-cells = <1>;
-	model = "Zynq CSE QSPI Board";
-	compatible = "xlnx,zynq-cse-qspi", "xlnx,zynq-7000";
+	model = "Zynq CSE NAND Board";
+	compatible = "xlnx,zynq-cse-nand", "xlnx,zynq-7000";
 
 	aliases {
-		spi0 = &qspi;
 		serial0 = &dcc;
 	};
 
 	memory@fffc0000 {
 		device_type = "memory";
-		reg = <0xFFFC0000 0x40000>;
+		reg = <0x0 0x400000>;
 	};
 
 	chosen {
@@ -46,49 +45,6 @@
 			interrupt-controller;
 			reg = <0xF8F01000 0x1000>,
 			      <0xF8F00100 0x100>;
-		};
-
-		qspi: spi@e000d000 {
-			clock-names = "ref_clk", "pclk";
-			clocks = <&clkc 10>, <&clkc 43>;
-			compatible = "xlnx,zynq-qspi-1.0";
-			status = "okay";
-			interrupt-parent = <&intc>;
-			interrupts = <0 19 4>;
-			reg = <0xe000d000 0x1000>;
-			#address-cells = <1>;
-			#size-cells = <0>;
-			is-dual = <0>;
-			num-cs = <1>;
-			flash@0 {
-				compatible = "n25q128a11";
-				reg = <0x0>;
-				spi-tx-bus-width = <1>;
-				spi-rx-bus-width = <4>;
-				spi-max-frequency = <50000000>;
-				#address-cells = <1>;
-				#size-cells = <1>;
-				partition@qspi-fsbl-uboot {
-					label = "qspi-fsbl-uboot";
-					reg = <0x0 0x100000>;
-				};
-				partition@qspi-linux {
-					label = "qspi-linux";
-					reg = <0x100000 0x500000>;
-				};
-				partition@qspi-device-tree {
-					label = "qspi-device-tree";
-					reg = <0x600000 0x20000>;
-				};
-				partition@qspi-rootfs {
-					label = "qspi-rootfs";
-					reg = <0x620000 0x5E0000>;
-				};
-				partition@qspi-bitstream {
-					label = "qspi-bitstream";
-					reg = <0xC00000 0x400000>;
-				};
-			};
 		};
 
 		slcr: slcr@f8000000 {
